@@ -1,0 +1,25 @@
+{
+  "name": "yomefun",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node git-server.js",
+    "clientinstall": "cd client && npm install",
+    "serverinstall": "cd server && npm install",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://likeconan428@bitbucket.org/likeconan428/yomefun.git"
+  },
+  "keywords": [],
+  "author": "Conan <liyijia428@gmail.com> (https://github.com/likeconan)",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/likeconan428/yomefun#readme",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "restify": "^4.3.0"
+  },
+  "devDependencies": {}
+}
