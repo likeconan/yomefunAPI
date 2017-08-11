@@ -10,8 +10,10 @@ module.exports = function (sequelize, DataTypes) {
             },
             nickName: DataTypes.STRING,
             password: {
-                allowNull: false,
-                type: DataTypes.STRING
+                type: DataTypes.STRING,
+                allowNull: {
+                    msg: 'password_not_null'
+                },
             },
             goingOn: DataTypes.STRING,
             school: DataTypes.STRING,
@@ -34,11 +36,6 @@ module.exports = function (sequelize, DataTypes) {
                 type: DataTypes.STRING,
                 unique: {
                     msg: 'wechat_unique'
-                },
-                validate: {
-                    notEmpty: {
-                        msg: 'wechat_required'
-                    }
                 }
             },
             lastLoginAt: {

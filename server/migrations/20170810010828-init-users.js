@@ -40,7 +40,6 @@ module.exports = {
       },
       wechat: {
         type: Sequelize.STRING,
-        allowNull: false,
         unique: true
       },
       lastLoginAt: {

@@ -4,16 +4,22 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "concurrently  \"sequelize db:migrate\" \"nodemon index.js\" "
   },
   "keywords": [],
   "author": "Conan <liyijia428@gmail.com> (https://github.com/likeconan)",
   "license": "ISC",
   "dependencies": {
+    "jsonwebtoken": "^7.4.2",
     "pg": "^7.1.0",
     "pg-hstore": "^2.3.2",
     "restify": "^5.0.1",
+    "restify-cors-middleware": "^1.0.1",
     "sequelize": "^4.4.2",
     "sequelize-cli": "^2.8.0"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.0",
+    "nodemon": "^1.11.0"
   }
 }
