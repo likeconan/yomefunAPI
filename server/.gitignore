@@ -32,6 +32,8 @@ node_modules
 build
 jspm_packages
 /typings/
+package-lock.json
+
 # Optional npm cache directory
 .npm
 
