@@ -57,6 +57,12 @@ class UserController extends BaseCtrl {
             path: '/users/login',
             method: 'GET'
         }, (req, res, next) => {
+            if (!req.params.mobile || !req.params.password) {
+                res.send(400, {
+                    message: 'login_error'
+                });
+                return next();
+            }
             super.excuteDb({
                 dbModel: 'users',
                 method: 'findOne',
