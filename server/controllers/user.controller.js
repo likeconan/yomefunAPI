@@ -73,7 +73,13 @@ class UserController extends BaseCtrl {
                     }
                 }
             }).then((data) => {
-                res.send(data);
+                if (data) {
+                    res.send(data);
+                } else {
+                    res.send(400, {
+                        message: 'login_wrong'
+                    })
+                }
                 return next();
             }).catch((err_msg) => {
                 res.send(400, {
