@@ -7,15 +7,18 @@ class RecommendedController extends BaseCtrl {
     }
     initalAction(lib) {
 
-        //Get users
+        //Get all recommended data
         super.addAction({
-            path: '/users',
+            path: '/recommended',
             method: 'GET'
         }, (req, res, next) => {
             super.excuteDb({
-                dbModel: 'users',
+                dbModel: 'recommended',
                 method: 'findAll',
                 object: {
+                    where: {
+                        isAvailable: req.params.isAvailable
+                    },
                     order: [
                         ['createdAt', 'DESC']
                     ]
@@ -24,22 +27,19 @@ class RecommendedController extends BaseCtrl {
                 res.send(data);
                 return next();
             }).catch((err_msg) => {
-                res.send(500, {
+                res.send(400, {
                     message: err_msg
                 })
                 return next()
             })
         });
 
-
-        //register user
         super.addAction({
-            name: 'user_register_ignore',
-            path: '/users',
+            path: '/recommended',
             method: 'POST'
         }, (req, res, next) => {
             super.excuteDb({
-                dbModel: 'users',
+                dbModel: 'recommended',
                 method: 'create',
                 object: req.params
             }).then((data) => {
@@ -51,38 +51,24 @@ class RecommendedController extends BaseCtrl {
                 })
                 return next()
             })
-        })
+        });
 
-
-        //login
         super.addAction({
-            name: 'user_login_ignore',
-            path: '/users/login',
-            method: 'GET'
+            path: '/recommended/:id',
+            method: 'PUT'
         }, (req, res, next) => {
-            if (!req.params.mobile || !req.params.password) {
-                res.send(400, {
-                    message: 'login_error'
-                });
-                return next();
-            }
             super.excuteDb({
-                dbModel: 'users',
-                method: 'findOne',
-                object: {
-                    where: req.params,
-                    attributes: {
-                        exclude: ['password', 'mobile', 'wechat']
-                    }
+                dbModel: 'recommended',
+                method: 'update',
+                object: req.params,
+                options: {
+                    where: {
+                        uuid: req.params.id
+                    },
+                    fields: ['title', 'activityTypeUUID', 'isAvailable', 'updatedAt']
                 }
             }).then((data) => {
-                if (data) {
-                    res.send(data);
-                } else {
-                    res.send(400, {
-                        message: 'login_wrong'
-                    })
-                }
+                res.send(data);
                 return next();
             }).catch((err_msg) => {
                 res.send(400, {
@@ -90,7 +76,7 @@ class RecommendedController extends BaseCtrl {
                 })
                 return next()
             })
-        })
+        });
     }
 }
 
