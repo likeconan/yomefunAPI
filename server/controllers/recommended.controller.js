@@ -1,7 +1,6 @@
 var BaseCtrl = require('./base.controller');
-var jwt = require('jsonwebtoken');
 
-class UserController extends BaseCtrl {
+class RecommendedController extends BaseCtrl {
     constructor(lib) {
         super(lib);
         this.initalAction(lib);
@@ -95,4 +94,4 @@ class UserController extends BaseCtrl {
     }
 }
 
-module.exports = UserController
+module.exports = RecommendedController

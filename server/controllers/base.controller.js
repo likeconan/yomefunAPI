@@ -49,6 +49,41 @@ class BaseController {
         })
         return promise;
     }
+
+    getImages(files, obj) {
+        var images = [];
+        for (var key in files) {
+            var file = files[key];
+            var url = path.basename(file.path)
+            images.push({
+                url: url,
+                path: file.path,
+                imageType: 'original',
+                from: obj.from,
+                relatedId: obj.relatedId,
+            });
+        }
+        return images
+    }
+
+    addImages(images) {
+        return new Promise((resolve, reject) => {
+            if (images.length > 0) {
+                this.excuteDb({
+                    dbModel: 'Images',
+                    method: 'bulkCreate',
+                    object: images
+                }).then((data) => {
+                    resolve(data)
+                }).catch((err) => {
+                    console.log(err)
+                    reject(err)
+                })
+            } else {
+                resolve();
+            }
+        })
+    }
 }
 
 module.exports = BaseController;
