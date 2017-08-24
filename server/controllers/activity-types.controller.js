@@ -7,13 +7,13 @@ class RecommendedController extends BaseCtrl {
     }
     initalAction(lib) {
 
-        //Get all recommended data
+        //Get all activity types data
         super.addAction({
-            path: '/recommended',
+            path: '/activity/types',
             method: 'GET'
         }, (req, res, next) => {
             super.excuteDb({
-                dbModel: 'recommended',
+                dbModel: 'activityTypes',
                 method: 'findAll',
                 object: {
                     where: {
@@ -38,11 +38,11 @@ class RecommendedController extends BaseCtrl {
         });
 
         super.addAction({
-            path: '/recommended',
+            path: '/activity/types',
             method: 'POST'
         }, (req, res, next) => {
             super.excuteDb({
-                dbModel: 'recommended',
+                dbModel: 'activityTypes',
                 method: 'create',
                 object: req.params
             }).then((data) => {
@@ -56,30 +56,6 @@ class RecommendedController extends BaseCtrl {
             })
         });
 
-        super.addAction({
-            path: '/recommended/:id',
-            method: 'PUT'
-        }, (req, res, next) => {
-            super.excuteDb({
-                dbModel: 'recommended',
-                method: 'update',
-                object: req.params,
-                options: {
-                    where: {
-                        uuid: req.params.id
-                    },
-                    fields: ['title', 'activityTypeUUID', 'isAvailable', 'updatedAt']
-                }
-            }).then((data) => {
-                res.send(data);
-                return next();
-            }).catch((err_msg) => {
-                res.send(400, {
-                    message: err_msg
-                })
-                return next()
-            })
-        });
     }
 }
 

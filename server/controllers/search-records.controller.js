@@ -45,14 +45,13 @@ class SearchRecordsController extends BaseCtrl {
         });
 
 
-        //register user
+        //log user search records
         super.addAction({
-            name: 'user_register_ignore',
-            path: '/users',
+            path: '/search/records',
             method: 'POST'
         }, (req, res, next) => {
             super.excuteDb({
-                dbModel: 'users',
+                dbModel: 'searchRecords',
                 method: 'create',
                 object: req.params
             }).then((data) => {
@@ -65,45 +64,7 @@ class SearchRecordsController extends BaseCtrl {
                 return next()
             })
         })
-
-
-        //login
-        super.addAction({
-            name: 'user_login_ignore',
-            path: '/users/login',
-            method: 'GET'
-        }, (req, res, next) => {
-            if (!req.params.mobile || !req.params.password) {
-                res.send(400, {
-                    message: 'login_error'
-                });
-                return next();
-            }
-            super.excuteDb({
-                dbModel: 'users',
-                method: 'findOne',
-                object: {
-                    where: req.params,
-                    attributes: {
-                        exclude: ['password', 'mobile', 'wechat']
-                    }
-                }
-            }).then((data) => {
-                if (data) {
-                    res.send(data);
-                } else {
-                    res.send(400, {
-                        message: 'login_wrong'
-                    })
-                }
-                return next();
-            }).catch((err_msg) => {
-                res.send(400, {
-                    message: err_msg
-                })
-                return next()
-            })
-        })
+        
     }
 }
 
