@@ -78,7 +78,17 @@ class UserController extends BaseCtrl {
                 }
             }).then((data) => {
                 if (data) {
-                    res.send(data);
+                    var token = jwt.sign({
+                        data: {
+                            isAuthorize: true,
+                            loggedUserId: data.dataValues.uuid
+                        }
+                    }, lib.config.secretKey, lib.config.expiresIn)
+
+                    res.send({
+                        token: token,
+                        user: data.dataValues
+                    });
                 } else {
                     res.send(400, {
                         message: 'login_wrong'

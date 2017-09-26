@@ -12,8 +12,8 @@ var server = restify.createServer(config.server);
 const cors = corsMiddleware({
     preflightMaxAge: 5, //Optional
     origins: [],
-    allowHeaders: ['API-Access-Token'],
-    exposeHeaders: ['API-Token-Expiry']
+    allowHeaders: ['api-access-token'],
+    exposeHeaders: ['api-token-expiry']
 })
 
 server.pre(cors.preflight)
@@ -40,28 +40,27 @@ Validate each request, as long as there is a schema for it
 */
 
 server.use(function (req, res, next) {
-    return next()
-    // json
-    //     .verify(req.headers['API-Access-Token'], config.secretKey, function (err, decoded) {
-    //         decoded = decoded ? decoded : {
-    //             data: {
-    //                 isAuthorize: false
-    //             }
-    //         }
-    //         if (lib.helpers.excludeRoutes(req.route.name)) {
-    //             req.decoded = decoded;
-    //             return next();
-    //         }
-    //         if (err || !decoded.data.isAuthorize) {
-    //             res.send(403, {
-    //                 message: 'Not authorized'
-    //             });
-    //             return next(false);
-    //         } else {
-    //             req.decoded = decoded;
-    //             return next();
-    //         }
-    //     })
+    json
+        .verify(req.headers['api-access-token'], config.secretKey, function (err, decoded) {
+            decoded = decoded ? decoded : {
+                data: {
+                    isAuthorize: false
+                }
+            }
+            if (lib.helpers.excludeRoutes(req.route.name)) {
+                req.decoded = decoded;
+                return next();
+            }
+            if (err || !decoded.data.isAuthorize) {
+                res.send(403, {
+                    message: 'Not authorized'
+                });
+                return next(false);
+            } else {
+                req.decoded = decoded;
+                return next();
+            }
+        })
 })
 
 lib
