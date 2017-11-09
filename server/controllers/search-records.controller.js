@@ -53,7 +53,10 @@ class SearchRecordsController extends BaseCtrl {
             super.excuteDb({
                 dbModel: 'searchRecords',
                 method: 'create',
-                object: req.params
+                object: {
+                    activityTypeUUID: req.params.activityTypeUUID,
+                    userUUID: req.decoded.data.loggedUserId
+                }
             }).then((data) => {
                 res.send(data);
                 return next();
@@ -64,7 +67,7 @@ class SearchRecordsController extends BaseCtrl {
                 return next()
             })
         })
-        
+
     }
 }
 

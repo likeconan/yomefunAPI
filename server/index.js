@@ -53,7 +53,7 @@ server.use(function (req, res, next) {
             }
             if (err || !decoded.data.isAuthorize) {
                 res.send(403, {
-                    message: 'Not authorized'
+                    message: 'not_authorized'
                 });
                 return next(false);
             } else {

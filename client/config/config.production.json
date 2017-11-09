@@ -1,0 +1,6 @@
+{
+    "staticServer": "http://dinllon.com/",
+    "apiUrl": "http://116.211.7.158:7030/",
+    "ifDEV": false,
+    "port": 4060
+}
