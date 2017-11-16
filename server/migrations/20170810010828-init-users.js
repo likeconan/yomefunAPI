@@ -15,6 +15,7 @@ module.exports = {
       nickName: {
         type: Sequelize.STRING(20)
       },
+      role: Sequelize.STRING,
       goingOn: {
         type: Sequelize.STRING
       },

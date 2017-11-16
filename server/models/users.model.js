@@ -15,6 +15,7 @@ module.exports = function (sequelize, DataTypes) {
                     msg: 'password_not_null'
                 },
             },
+            role: DataTypes.STRING,
             goingOn: DataTypes.STRING,
             school: DataTypes.STRING,
             work: DataTypes.STRING,
