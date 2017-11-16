@@ -1,3 +1,5 @@
+var path = require('path')
+
 module.exports = {
     development: {
         secretKey: 'secretKeyForYomefun',
@@ -10,7 +12,7 @@ module.exports = {
             version: '1.0.0',
             port: 9000,
         },
-        filePath: "F:/Upload/Original",
+        filePath: path.dirname(path.dirname(__dirname)) + '/client/upload/',
         origins: ['http://localhost:3000'],
     },
     production: {

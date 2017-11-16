@@ -1,5 +1,5 @@
 {
-    "staticServer": "http://localhost:8080/",
+    "staticServer": "http://localhost:3000/upload/",
     "apiUrl": "http://localhost:9000/",
     "ifDEV": true,
     "port": 3000
