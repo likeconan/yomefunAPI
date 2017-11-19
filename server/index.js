@@ -4,14 +4,15 @@ var restify = require('restify'),
     json = require('jsonwebtoken'),
     config = lib.config;
 
+
 const corsMiddleware = require('restify-cors-middleware')
 
 var server = restify.createServer(config.server);
-
+var env = process.env.NODE_ENV || 'development';
 
 const cors = corsMiddleware({
     preflightMaxAge: 5, //Optional
-    origins: [],
+    origins: config.origins,
     allowHeaders: ['api-access-token'],
     exposeHeaders: ['api-token-expiry']
 })
@@ -68,5 +69,5 @@ lib
     .setupRoutes(server, lib)
 
 server.listen(config.server.port, function () {
-    console.log("YomeFunAPI started succesfully at port " + config.server.port + " in " + process.env.NODE_ENV)
+    console.log("YomeFunAPI started succesfully at port " + config.server.port + " in " + env)
 })

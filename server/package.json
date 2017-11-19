@@ -4,13 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently  \"sequelize db:migrate\"  \"nodemon index.js\" "
+    "start": "concurrently  \"sequelize db:migrate\"  \"nodemon index.js\" ",
+    "seed": "sequelize db:seed:all"
   },
   "keywords": [],
   "author": "Conan <liyijia428@gmail.com> (https://github.com/likeconan)",
   "license": "ISC",
   "dependencies": {
     "jsonwebtoken": "^7.4.2",
+    "log4js": "^2.3.12",
     "pg": "^7.1.0",
     "pg-hstore": "^2.3.2",
     "restify": "^5.0.1",

@@ -1,6 +1,6 @@
 'use strict';
 module.exports = function (sequelize, DataTypes) {
-    var Images = sequelize.define('images',
+    var images = sequelize.define('images',
         {
             uuid: {
                 type: DataTypes.UUID,
@@ -32,8 +32,7 @@ module.exports = function (sequelize, DataTypes) {
         {
             associate: function (models) {
                 // associations can be defined here
-                models.Images.belongsTo(models.SchoolCurriculums, { foreignKey: 'relatedId', constraints: false })
             }
         });
-    return Images;
+    return images;
 };

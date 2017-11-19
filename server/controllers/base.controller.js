@@ -2,6 +2,7 @@ class BaseController {
     constructor(lib) {
         this.actions = [];
         this.server = null;
+        this.logger = lib.logger;
         this.db = lib.db;
     }
 
@@ -39,12 +40,12 @@ class BaseController {
                     else if (err.constructor.name === 'UniqueConstraintError') {
                         msg = err.original.constraint + '_' + err.original.code
                     }
-                    console.log(err)
-                    reject(msg) //need to get the error message
+                    this.logger.error(err.message)
+                    reject({ message: msg }) //need to get the error message
                 })
             } catch (error) {
-                console.log(error);
-                reject('internal_error')
+                this.logger.error(error.message)
+                reject(error)
             }
         })
         return promise;

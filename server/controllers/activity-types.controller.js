@@ -1,6 +1,6 @@
 var BaseCtrl = require('./base.controller');
 
-class RecommendedController extends BaseCtrl {
+class ActivityTypesController extends BaseCtrl {
     constructor(lib) {
         super(lib);
         this.initalAction(lib);
@@ -29,10 +29,8 @@ class RecommendedController extends BaseCtrl {
             }).then((data) => {
                 res.send(data);
                 return next();
-            }).catch((err_msg) => {
-                res.send(400, {
-                    message: err_msg
-                })
+            }).catch((err) => {
+                res.send(400, err)
                 return next()
             })
         });
@@ -48,10 +46,8 @@ class RecommendedController extends BaseCtrl {
             }).then((data) => {
                 res.send(data);
                 return next();
-            }).catch((err_msg) => {
-                res.send(400, {
-                    message: err_msg
-                })
+            }).catch((err) => {
+                res.send(400, err)
                 return next()
             })
         });
@@ -59,4 +55,4 @@ class RecommendedController extends BaseCtrl {
     }
 }
 
-module.exports = RecommendedController
+module.exports = ActivityTypesController

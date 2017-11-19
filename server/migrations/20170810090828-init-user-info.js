@@ -2,31 +2,44 @@
 
 module.exports = {
   up: function (queryInterface, Sequelize) {
-    queryInterface.createTable('images', {
+    queryInterface.createTable('userInfos', {
       uuid: {
-        type: Sequelize.UUID,
         allowNull: false,
         primaryKey: true,
+        type: Sequelize.UUID
       },
-      url: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      path: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      imageType: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      from: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      relatedUUID: {
+      userUUID: {
         allowNull: false,
         type: Sequelize.UUID,
+        references: {
+          model: 'users',
+          key: 'uuid'
+        }
+      },
+      nickName: {
+        type: Sequelize.STRING(20)
+      },
+      goingOn: {
+        type: Sequelize.STRING
+      },
+      school: {
+        type: Sequelize.STRING
+      },
+      work: {
+        type: Sequelize.STRING
+      },
+      backPic: {
+        type: Sequelize.STRING
+      },
+      headPic: {
+        type: Sequelize.STRING
+      },
+      birthday: {
+        type: Sequelize.DATE
+      },
+      wechat: {
+        type: Sequelize.STRING,
+        unique: true
       },
       createdAt: {
         allowNull: false,
@@ -40,6 +53,6 @@ module.exports = {
   },
 
   down: function (queryInterface, Sequelize) {
-    queryInterface.dropTable('images');
+    queryInterface.dropTable('userInfos');
   }
 };

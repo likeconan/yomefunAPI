@@ -1,6 +1,6 @@
 'use strict';
 module.exports = function (sequelize, DataTypes) {
-    var Users = sequelize.define('users',
+    var users = sequelize.define('users',
         {
             uuid: {
                 type: DataTypes.UUID,
@@ -8,19 +8,6 @@ module.exports = function (sequelize, DataTypes) {
                 primaryKey: true,
                 defaultValue: DataTypes.UUIDV4
             },
-            nickName: DataTypes.STRING,
-            password: {
-                type: DataTypes.STRING,
-                allowNull: {
-                    msg: 'password_not_null'
-                },
-            },
-            role: DataTypes.STRING,
-            goingOn: DataTypes.STRING,
-            school: DataTypes.STRING,
-            work: DataTypes.STRING,
-            backPic: DataTypes.STRING,
-            headPic: DataTypes.STRING,
             mobile: {
                 type: DataTypes.STRING,
                 unique: {
@@ -32,13 +19,17 @@ module.exports = function (sequelize, DataTypes) {
                     }
                 }
             },
-            birthday: DataTypes.DATE,
-            wechat: {
+            password: {
                 type: DataTypes.STRING,
-                unique: {
-                    msg: 'wechat_unique'
-                }
+                allowNull: {
+                    msg: 'password_not_null'
+                },
             },
+            role: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+            registrationId: DataTypes.STRING,
             lastLoginAt: {
                 type: DataTypes.DATE,
                 defaultValue: DataTypes.NOW
@@ -52,5 +43,5 @@ module.exports = function (sequelize, DataTypes) {
 
         });
 
-    return Users;
+    return users;
 };

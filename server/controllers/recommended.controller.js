@@ -29,10 +29,8 @@ class RecommendedController extends BaseCtrl {
             }).then((data) => {
                 res.send(data);
                 return next();
-            }).catch((err_msg) => {
-                res.send(400, {
-                    message: err_msg
-                })
+            }).catch((err) => {
+                res.send(400, err)
                 return next()
             })
         });
@@ -48,10 +46,8 @@ class RecommendedController extends BaseCtrl {
             }).then((data) => {
                 res.send(data);
                 return next();
-            }).catch((err_msg) => {
-                res.send(400, {
-                    message: err_msg
-                })
+            }).catch((err) => {
+                res.send(400, err)
                 return next()
             })
         });
@@ -73,10 +69,8 @@ class RecommendedController extends BaseCtrl {
             }).then((data) => {
                 res.send(data);
                 return next();
-            }).catch((err_msg) => {
-                res.send(400, {
-                    message: err_msg
-                })
+            }).catch((err) => {
+                res.send(400, err)
                 return next()
             })
         });

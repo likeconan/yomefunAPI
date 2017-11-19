@@ -8,41 +8,20 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.UUID
       },
-      password: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      nickName: {
-        type: Sequelize.STRING(20)
-      },
-      role: Sequelize.STRING,
-      goingOn: {
-        type: Sequelize.STRING
-      },
-      school: {
-        type: Sequelize.STRING
-      },
-      work: {
-        type: Sequelize.STRING
-      },
-      backPic: {
-        type: Sequelize.STRING
-      },
-      headPic: {
-        type: Sequelize.STRING
-      },
       mobile: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true
       },
-      birthday: {
-        type: Sequelize.DATE
+      password: {
+        allowNull: false,
+        type: Sequelize.STRING
       },
-      wechat: {
-        type: Sequelize.STRING,
-        unique: true
+      role: {
+        allowNull: false,
+        type: Sequelize.STRING
       },
+      registrationId: Sequelize.STRING,
       lastLoginAt: {
         type: Sequelize.DATE,
       },
