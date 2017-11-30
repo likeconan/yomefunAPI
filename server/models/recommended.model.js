@@ -15,10 +15,6 @@ module.exports = function (sequelize, DataTypes) {
             activityTypeUUID: {
                 allowNull: false,
                 type: DataTypes.UUID,
-                references: {
-                    model: 'activityTypes',
-                    key: 'uuid'
-                }
             },
             isAvailable: {
                 allowNull: false,

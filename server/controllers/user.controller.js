@@ -1,6 +1,7 @@
 var BaseCtrl = require('./base.controller');
 var jwt = require('jsonwebtoken');
 
+
 class UserController extends BaseCtrl {
     constructor(lib) {
         super(lib);
@@ -20,10 +21,15 @@ class UserController extends BaseCtrl {
             }
             super.excuteDb({
                 dbModel: 'users',
-                method: 'findById',
-                object: req.decoded.data._id
+                method: 'findOne',
+                object: {
+                    where: {
+                        uuid: req.decoded.data.loggedUserId
+                    },
+                    include: ['userInfos']
+                },
             }).then((data) => {
-                if (data) {
+                if (data && lib.helpers.loginRole(data.role, req.params.from)) {
                     super.excuteDb({
                         dbModel: 'users',
                         method: 'update',
@@ -32,7 +38,7 @@ class UserController extends BaseCtrl {
                         },
                         options: {
                             where: {
-                                uuid: req.decoded.data._id
+                                uuid: req.decoded.data.loggedUserId
                             }
                         }
                     })
@@ -93,10 +99,14 @@ class UserController extends BaseCtrl {
         //login
         super.addAction({
             name: 'user_login_ignore',
-            path: '/users/login',
+            path: '/users/login/:from',
             method: 'GET'
         }, (req, res, next) => {
-            if (!req.params.mobile || !req.params.password) {
+            if (!req.params.from) {
+                res.send(403, { message: 'no_login_from' })
+                return next()
+            }
+            if (!req.query.mobile || !req.query.password) {
                 res.send(400, {
                     message: 'login_error'
                 });
@@ -106,13 +116,14 @@ class UserController extends BaseCtrl {
                 dbModel: 'users',
                 method: 'findOne',
                 object: {
-                    where: req.params,
+                    where: req.query,
                     attributes: {
-                        exclude: ['password', 'mobile', 'wechat']
-                    }
+                        exclude: ['password', 'registrationId']
+                    },
+                    include: ['userInfos']
                 }
             }).then((data) => {
-                if (data) {
+                if (data && lib.helpers.loginRole(data.role, req.params.from)) {
                     var token = jwt.sign({
                         data: {
                             isAuthorize: true,

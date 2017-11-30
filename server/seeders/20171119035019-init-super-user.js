@@ -9,7 +9,7 @@ module.exports = {
         uuid: uuidv4(),
         mobile: '15123456789',
         password: 'yomeAdmin@123',
-        role: 'superadmin',
+        role: 'superAdmin',
         isLocked: false,
         createdAt: new Date(),
         updatedAt: new Date(),

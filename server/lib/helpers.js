@@ -1,6 +1,7 @@
 module.exports = {
     setupRoutes: setupRoutes,
     excludeRoutes: excludeRoutes,
+    loginRole: loginRole,
 }
 
 function setupRoutes(server, lib) {
@@ -16,4 +17,12 @@ function excludeRoutes(routename) {
     } else {
         return false;
     }
+}
+
+function loginRole(role, from) {
+    var obj = {
+        superAdmin: ['client_mobile', 'portal'],
+        generalUser: ['client_mobile']
+    }
+    return obj[role].indexOf(from) >= 0;
 }

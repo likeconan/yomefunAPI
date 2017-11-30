@@ -11,10 +11,6 @@ module.exports = function (sequelize, DataTypes) {
             userUUID: {
                 allowNull: false,
                 type: DataTypes.UUID,
-                references: {
-                    model: 'users',
-                    key: 'uuid'
-                }
             },
             nickName: DataTypes.STRING,
             goingOn: DataTypes.STRING,

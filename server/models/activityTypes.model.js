@@ -23,7 +23,9 @@ module.exports = function (sequelize, DataTypes) {
             },
         },
         {
-           
+            // associate: function () {
+
+            // }
         });
     return activityTypes;
 };

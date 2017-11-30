@@ -57,12 +57,13 @@ module.exports = function (sequelize, DataTypes) {
                     foreignKey: 'activityTypeUUID'
                 });
 
-                models.Activities.hasMany(models.Images, {
+                models.activities.hasMany(models.images, {
                     foreignKey: 'relatedId',
                     constraints: false
                 });
 
             }
+
         });
     return activities;
 };

@@ -19,7 +19,14 @@ class BaseController {
     addAction(spec, fn) {
         var newAct = {
             'spec': spec,
-            action: fn,
+            action: (req, res, next) => {
+                try {
+                    fn(req, res, next)
+                } catch (err) {
+                    res.send(400, err)
+                    this.logger.error(err.message)
+                }
+            },
         }
         this
             .actions
@@ -29,13 +36,13 @@ class BaseController {
     excuteDb(spec) {
         var promise = new Promise((resolve, reject) => {
             try {
-                var process = this.db[spec.dbModel][spec.method](spec.object);
+                var process = this.db[spec.dbModel][spec.method](spec.object, spec.options);
                 process.then((data) => {
                     resolve(data);
                 }).catch((err) => {
                     var msg = 'unknown_error';
                     if (err.constructor.name === 'DatabaseError') {
-                        msg = err.original.column + '_' + err.original.code
+                        msg = 'database_error'
                     }
                     else if (err.constructor.name === 'UniqueConstraintError') {
                         msg = err.original.constraint + '_' + err.original.code
