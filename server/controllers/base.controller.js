@@ -36,7 +36,10 @@ class BaseController {
     excuteDb(spec) {
         var promise = new Promise((resolve, reject) => {
             try {
-                var process = this.db[spec.dbModel][spec.method](spec.object, spec.options);
+                var process = spec.options ?
+                    this.db[spec.dbModel][spec.method](spec.object, spec.options)
+                    :
+                    this.db[spec.dbModel][spec.method](spec.object);
                 process.then((data) => {
                     resolve(data);
                 }).catch((err) => {

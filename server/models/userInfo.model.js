@@ -11,6 +11,10 @@ module.exports = function (sequelize, DataTypes) {
             userUUID: {
                 allowNull: false,
                 type: DataTypes.UUID,
+                references: {
+                    model: 'users',
+                    key: 'uuid'
+                },
             },
             nickName: DataTypes.STRING,
             goingOn: DataTypes.STRING,
@@ -28,12 +32,12 @@ module.exports = function (sequelize, DataTypes) {
         },
         {
             associate: function (models) {
-                // associations can be defined here
                 models.userInfos.belongsTo(models.users, {
                     foreignKey: 'userUUID'
                 })
             }
-        });
+        }
+    );
 
     return userInfos;
 };

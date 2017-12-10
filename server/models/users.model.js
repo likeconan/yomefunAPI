@@ -40,15 +40,13 @@ module.exports = function (sequelize, DataTypes) {
             },
         },
         {
-            classMethods: {
-                associate: function (models) {
-                    // associations can be defined here
-                    models.users.hasOne(models.userInfos, {
-                        foreignKey: 'userUUID'
-                    })
-                }
+            associate: function (models) {
+                models.users.hasOne(models.userInfos, {
+                    foreignKey: 'userUUID'
+                })
             }
-        });
+        }
+    );
 
     return users;
 };

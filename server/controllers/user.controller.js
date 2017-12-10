@@ -26,7 +26,9 @@ class UserController extends BaseCtrl {
                     where: {
                         uuid: req.decoded.data.loggedUserId
                     },
-                    include: ['userInfos']
+                    include: [{
+                        model: lib.db.userInfos
+                    }]
                 },
             }).then((data) => {
                 if (data && lib.helpers.loginRole(data.role, req.params.from)) {
@@ -42,7 +44,20 @@ class UserController extends BaseCtrl {
                             }
                         }
                     })
-                    res.send(data)
+
+
+                    var token = jwt.sign({
+                        data: {
+                            isAuthorize: true,
+                            loggedUserId: data.dataValues.uuid,
+                        }
+                    }, lib.config.secretKey, lib.config.expiresIn)
+
+                    res.send({
+                        token: token,
+                        user: data.dataValues
+                    });
+
                     return next()
                 } else {
                     res.send(403, { message: 'not_authorized' })
@@ -76,18 +91,71 @@ class UserController extends BaseCtrl {
         });
 
 
+        super.addAction({
+            name: 'user_check_exist_ignore',
+            path: '/users/exist/:mobile',
+            method: 'GET'
+        }, (req, res, next) => {
+
+            if (!lib.helpers.ifMobile(req.params.mobile)) {
+                res.send(400, { message: 'mobile_wrong' })
+                next();
+                return;
+            }
+
+            super.excuteDb({
+                dbModel: 'users',
+                method: 'findOne',
+                object: {
+                    where: {
+                        mobile: req.params.mobile
+                    }
+                }
+            }).then((data) => {
+                res.send({
+                    ifnew: !data,
+                    mobile: req.params.mobile
+                });
+                return next();
+            }).catch((err) => {
+                res.send(400, err)
+                return next()
+            })
+        })
+
         //register user
         super.addAction({
             name: 'user_register_ignore',
-            path: '/users',
+            path: '/users/register/:from',
             method: 'POST'
         }, (req, res, next) => {
+            if (!req.params.from) {
+                res.send(403, { message: 'no_from' })
+                return next()
+            }
+            var role = {
+                'client_mobile': 'generalUser'
+            }
             super.excuteDb({
                 dbModel: 'users',
                 method: 'create',
-                object: req.params
+                object: {
+                    mobile: req.params.mobile,
+                    password: req.params.password,
+                    role: role[req.params.from]
+                },
             }).then((data) => {
-                res.send(data);
+                var token = jwt.sign({
+                    data: {
+                        isAuthorize: true,
+                        loggedUserId: data.dataValues.uuid,
+                    }
+                }, lib.config.secretKey, lib.config.expiresIn)
+
+                res.send({
+                    token: token,
+                    user: data.dataValues
+                });
                 return next();
             }).catch((err) => {
                 res.send(400, err)
@@ -120,7 +188,7 @@ class UserController extends BaseCtrl {
                     attributes: {
                         exclude: ['password', 'registrationId']
                     },
-                    include: ['userInfos']
+                    include: [lib.db.userInfos]
                 }
             }).then((data) => {
                 if (data && lib.helpers.loginRole(data.role, req.params.from)) {
