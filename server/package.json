@@ -17,7 +17,7 @@
     "pg-hstore": "^2.3.2",
     "restify": "^5.0.1",
     "restify-cors-middleware": "^1.0.1",
-    "sequelize": "^4.23.1",
+    "sequelize": "^4.27.0",
     "sequelize-cli": "^3.1.0",
     "uuid": "^3.1.0"
   },

@@ -2,6 +2,7 @@ module.exports = {
     setupRoutes: setupRoutes,
     excludeRoutes: excludeRoutes,
     loginRole: loginRole,
+    ifMobile: ifMobile,
 }
 
 function setupRoutes(server, lib) {
@@ -25,4 +26,8 @@ function loginRole(role, from) {
         generalUser: ['client_mobile']
     }
     return obj[role].indexOf(from) >= 0;
+}
+
+function ifMobile(val) {
+    return /^1[3|4|5|8][0-9]\d{8}$/.test(val);
 }
